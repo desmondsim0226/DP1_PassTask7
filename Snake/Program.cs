@@ -76,6 +76,13 @@ namespace Snake
             Console.ForegroundColor = ConsoleColor.Yellow;
             Console.Write("@");
         }
+        
+        public void createBonusFood(Position BonusFood)
+        {
+            Console.SetCursorPosition(BonusFood.col, BonusFood.row);
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write("#");
+        }
 
         public void createObstacle(Position obstacle)
         {
@@ -236,6 +243,15 @@ namespace Snake
 
             game1.createFood(food);
             
+            Position BonusFood;
+            do
+            {
+                BonusFood = new Position(randomNumbersGenerator.Next(0, Console.WindowHeight), randomNumbersGenerator.Next(0, Console.WindowWidth));
+            }
+            while (snakeElements.Contains(BonusFood) || obstacles.Contains(BonusFood));
+            
+            game1.createBonusFood(BonusFood);
+            
             //the body of the snake
             foreach (Position position in snakeElements)
             {
@@ -390,6 +406,42 @@ namespace Snake
                          obstacles.Add(obstacle);
                          game1.createObstacle(obstacle);
                 }
+                // snake eat bonus food
+                else if (snakeNewHead.col == BonusFood.col && snakeNewHead.row == BonusFood.row) //if snake head's coordinates is same with food
+                {
+                    //Increase snake movement speed when eating the food
+                    sleepTime -= 10.00;
+
+                    //Snake eat food sound effect
+                    SoundPlayer sound3 = new SoundPlayer("food.wav");
+                    sound3.Play();
+
+                    //add one point when food is eaten
+                    userPoints += 2;
+
+                    //creates new Bonusfood 
+                    do
+                    {
+                        BonusFood = new Position(randomNumbersGenerator.Next(0, Console.WindowHeight),
+                        randomNumbersGenerator.Next(0, Console.WindowWidth));
+                    }
+                    while (snakeElements.Contains(BonusFood) || obstacles.Contains(BonusFood));
+
+                    lastBonusFoodTime = Environment.TickCount;
+                    game1.createBonusFood(BonusFood);
+                    sleepTime--;
+
+                    //creates new obstacle
+                    Position obstacle = new Position();
+                    do
+                    {
+                        obstacle = new Position(randomNumbersGenerator.Next(0, Console.WindowHeight),
+                        randomNumbersGenerator.Next(0, Console.WindowWidth));
+                    }
+                    while (snakeElements.Contains(obstacle) || obstacles.Contains(obstacle) || (BonusFood.row != obstacle.row && BonusFood.col != obstacle.row));
+                    obstacles.Add(obstacle);
+                    game1.createObstacle(obstacle);
+                }
                 else
                 {
                     // moving...
@@ -413,6 +465,21 @@ namespace Snake
                 }
 
                 game1.createFood(food);
+                
+                if (Environment.TickCount - lastBonusFoodTime >= BonusFoodDisappearTime)
+                {
+                    negativePoints = negativePoints + 50;
+                    Console.SetCursorPosition(BonusFood.col, BonusFood.row);
+                    Console.Write(" ");
+                    do
+                    {
+                        BonusFood = new Position(randomNumbersGenerator.Next(0, Console.WindowHeight),
+                            randomNumbersGenerator.Next(0, Console.WindowWidth));
+                    }
+                    while (snakeElements.Contains(BonusFood) || obstacles.Contains(BonusFood));
+                    lastBonusFoodTime = Environment.TickCount;
+                }
+                game1.createBonusFood(BonusFood);
                                           
                 Thread.Sleep((int)sleepTime);
             }
