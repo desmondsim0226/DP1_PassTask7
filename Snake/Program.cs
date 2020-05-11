@@ -44,7 +44,7 @@ namespace Snake
             Console.SetCursorPosition((Console.WindowWidth - statuspoint.Length) / 2, (Console.WindowHeight / 2) - 1);
             Console.WriteLine(statuspoint, userPoints);
             
-            string snakelivesstatus ="Snake lives left: {0}";
+            string snakelivesstatus ="Snake lives left: 0";
             Console.SetCursorPosition((Console.WindowWidth - snakelivesstatus.Length) / 2, (Console.WindowHeight / 2) - 3);
             Console.WriteLine(snakelivesstatus, snakeLives);
 
