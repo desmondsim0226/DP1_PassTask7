@@ -138,6 +138,8 @@ namespace Snake
             int negativePoints = 0;
             int userPoints = 0;
             double sleepTime = 100;
+            //Snake contain three lives
+            int snakeLives = 3;
             
 
             Game game1 = new Game();
