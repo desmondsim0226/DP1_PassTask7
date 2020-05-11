@@ -334,18 +334,7 @@ namespace Snake
                 //this is the game over scene after the player loses the game either by the snake colliding with itself or the snake colliding with obstacles                
                 if (snakeElements.Contains(snakeNewHead) || obstacles.Contains(snakeNewHead) || (snakeNewHead.col < 0) || (snakeNewHead.row < 0) || (snakeNewHead.row >= Console.WindowHeight) || (snakeNewHead.col >= Console.WindowWidth))
                 {
-                    //When the snake hit the obstacle sound effect (Game Over)
-                     SoundPlayer sound1 = new SoundPlayer("die.wav");
-                     sound1.Play();
-
-                    string player_name = game1.gameOverScreen(userPoints);
-
-                    using (StreamWriter file = new StreamWriter("Score.txt", true))
-                    {
-                        file.WriteLine(player_name + " " + userPoints);
-                    }
-                    return;
-                    
+                    snakeLives--;   
                 } 
                 else if (userPoints == 10) //winning condition
                 {
@@ -361,6 +350,25 @@ namespace Snake
                     }
                     return;
                 }
+                if(snakeLives == 0)
+                {
+                    //This is to display the snake lives.
+                    Console.SetCursorPosition(100, 0);
+                    Console.ForegroundColor = ConsoleColor.White;          
+                    Console.WriteLine("Snake lives left: {0} \t", snakeLives);
+
+                    SoundPlayer sound1 = new SoundPlayer("die.wav");
+                    sound1.Play();
+
+                    game1.gameOverScreen(userPoints,snakeLives);
+
+                    using (StreamWriter file = new StreamWriter("Score.txt", true))
+                    {
+                        file.WriteLine("Score: " + userPoints + "\tSnake Length: " + snakeElements.Count + "\tLOSS");
+                    }
+                    return;
+                }
+                
                            
                 game1.createSnakeBody(snakeHead);
                
