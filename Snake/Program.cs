@@ -11,7 +11,7 @@ using System.ComponentModel;
 using System.Media;
 using System.Windows.Media;
 using System.Net;
-
+ 
 //namespace
 namespace Snake
 {   
@@ -54,11 +54,12 @@ namespace Snake
             Console.ForegroundColor = ConsoleColor.White;
             Console.SetCursorPosition((Console.WindowWidth - msg.Length) / 2, (Console.WindowHeight / 2));
             Console.WriteLine(msg);
+            Console.SetCursorPosition((Console.WindowWidth - msg.Length) / 2, (Console.WindowHeight / 2) + 1);
             name = Console.ReadLine();
             return name;
         }
 
-        public void gameWon()
+        public string gameWon()
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
 
@@ -68,10 +69,14 @@ namespace Snake
             Console.WriteLine(winning);
 
             //Add instructions at the end of the game and re-position it
-            string endmsg = "Press enter to exit the game!";
-            Console.SetCursorPosition((Console.WindowWidth - endmsg.Length) / 2, (Console.WindowHeight / 2));
-            Console.WriteLine(endmsg);
-            Console.ReadLine();
+            string msg = "Enter player name:";
+            string name;
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.SetCursorPosition((Console.WindowWidth - msg.Length) / 2, (Console.WindowHeight / 2));
+            Console.WriteLine(msg);
+            Console.SetCursorPosition((Console.WindowWidth - msg.Length) / 2, (Console.WindowHeight / 2) + 1);
+            name = Console.ReadLine();
+            return name;
         }
 
         public void createFood(Position food)
@@ -336,17 +341,17 @@ namespace Snake
                 {
                     snakeLives--;   
                 } 
-                else if (userPoints == 10) //winning condition
+                else if (userPoints >= 10) //winning condition
                 {
                     //This sound plays when the player wins
                     SoundPlayer sound2 = new SoundPlayer("gamestart.wav");
                     sound2.Play();
 
-                    game1.gameWon();
+                    string player_name = game1.gameWon();
 
                     using (StreamWriter file = new StreamWriter("Score.txt", true))
                     {
-                        file.WriteLine("Score: " + userPoints + "\tSnake Length:" + snakeElements.Count + "\tWIN");
+                        file.WriteLine(player_name + " " + userPoints);
                     }
                     return;
                 }
@@ -360,11 +365,11 @@ namespace Snake
                     SoundPlayer sound1 = new SoundPlayer("die.wav");
                     sound1.Play();
 
-                    game1.gameOverScreen(userPoints,snakeLives);
+                    string player_name = game1.gameOverScreen(userPoints, snakeLives);
 
                     using (StreamWriter file = new StreamWriter("Score.txt", true))
                     {
-                        file.WriteLine("Score: " + userPoints + "\tSnake Length: " + snakeElements.Count + "\tLOSS");
+                        file.WriteLine(player_name + " " + userPoints);
                     }
                     return;
                 }
