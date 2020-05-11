@@ -30,7 +30,7 @@ namespace Snake
    
     class Game
     {
-        public string gameOverScreen(int userPoints)
+        public string gameOverScreen(int userPoints, int snakeLives)
         {
             Console.ForegroundColor = ConsoleColor.Red;
 
@@ -43,6 +43,10 @@ namespace Snake
             string statuspoint = "Your points are: {0}";
             Console.SetCursorPosition((Console.WindowWidth - statuspoint.Length) / 2, (Console.WindowHeight / 2) - 1);
             Console.WriteLine(statuspoint, userPoints);
+            
+            string snakelivesstatus ="Snake lives left: {0}";
+            Console.SetCursorPosition((Console.WindowWidth - snakelivesstatus.Length) / 2, (Console.WindowHeight / 2) - 3);
+            Console.WriteLine(snakelivesstatus, snakeLives);
 
             //Add instructions at the end of the game and re-position it
             string msg = "Enter player name:";
@@ -134,6 +138,7 @@ namespace Snake
             int negativePoints = 0;
             int userPoints = 0;
             double sleepTime = 100;
+            
 
             Game game1 = new Game();
 
