@@ -127,8 +127,10 @@ namespace Snake
             byte down = 2;
             byte up = 3;
             int lastFoodTime = 0;
+            int lastBonusFoodTime = 0;
             //The food relocate's timer (adjusted)
             int foodDissapearTime = 15000;
+            int BonusFoodDisappearTime = 9000;
             int negativePoints = 0;
             int userPoints = 0;
             double sleepTime = 100;
