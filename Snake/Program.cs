@@ -350,12 +350,12 @@ namespace Snake
                     }
                     return;
                 }
-                if(snakeLives == 0)
+                if(snakeLives == 0 || (snakeNewHead.col < 0) || (snakeNewHead.row < 0) || (snakeNewHead.row >= Console.WindowHeight) || (snakeNewHead.col >= Console.WindowWidth))
                 {
                     //This is to display the snake lives.
                     Console.SetCursorPosition(100, 0);
                     Console.ForegroundColor = ConsoleColor.White;          
-                    Console.WriteLine("Snake lives left: {0} \t", snakeLives);
+                    Console.WriteLine("Snake lives left: 0 ");
 
                     SoundPlayer sound1 = new SoundPlayer("die.wav");
                     sound1.Play();
