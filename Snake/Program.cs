@@ -332,7 +332,7 @@ namespace Snake
                 Console.WriteLine("Snake lives left: {0} \t", snakeLives);
                 
                 //this is the game over scene after the player loses the game either by the snake colliding with itself or the snake colliding with obstacles                
-                if (snakeElements.Contains(snakeNewHead) || obstacles.Contains(snakeNewHead) || (snakeNewHead.col < 0) || (snakeNewHead.row < 0) || (snakeNewHead.row >= Console.WindowHeight) || (snakeNewHead.col >= Console.WindowWidth))
+                if (snakeElements.Contains(snakeNewHead) || obstacles.Contains(snakeNewHead))
                 {
                     snakeLives--;   
                 } 
