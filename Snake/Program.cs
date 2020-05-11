@@ -325,6 +325,9 @@ namespace Snake
                 userPoints = Math.Max(userPoints, 0);
                 Console.WriteLine("Your points are: {0} \t REACH 10 POINTS TO WIN", userPoints);
                 
+                //This is to display the snake lives.
+                
+                
                 //this is the game over scene after the player loses the game either by the snake colliding with itself or the snake colliding with obstacles                
                 if (snakeElements.Contains(snakeNewHead) || obstacles.Contains(snakeNewHead) || (snakeNewHead.col < 0) || (snakeNewHead.row < 0) || (snakeNewHead.row >= Console.WindowHeight) || (snakeNewHead.col >= Console.WindowWidth))
                 {
